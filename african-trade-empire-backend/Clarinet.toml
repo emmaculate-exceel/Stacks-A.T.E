@@ -9,6 +9,12 @@ requirements = []
 path = 'contracts/african-trade-empire.clar'
 clarity_version = 3
 epoch = 3.1
+
+[contracts.dao-investment-platform]
+path = 'contracts/dao-investment-platform.clar'
+clarity_version = 3
+epoch = 3.1
+
 [repl.analysis]
 passes = ['check_checker']
 
