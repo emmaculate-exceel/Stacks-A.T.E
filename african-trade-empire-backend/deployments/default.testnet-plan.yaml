@@ -1,0 +1,22 @@
+---
+id: 0
+name: African Trade Empire Deployment
+network: testnet
+stacks-node: "https://api.testnet.hiro.so"
+bitcoin-node: "https://bitcoin.regtest.hiro.so"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - requirement-publish:
+            contract-id: african-trade-empire
+            location: ./contracts/african-trade-empire.clar
+            cost: 67270
+            path: "./contracts/african-trade-empire.clar"
+            anchor-block-only: true
+        - requirement-publish:
+            contract-id: dao-investment-platform
+            location: ./contracts/dao-investment-platform.clar
+            cost: 120580
+            path: "./contracts/dao-investment-platform.clar"
+            anchor-block-only: true
