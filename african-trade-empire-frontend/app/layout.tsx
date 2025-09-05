@@ -3,13 +3,16 @@
 import './globals.css';
 import { AuthProvider } from '../context/AuthContext';
 import Navbar from '../components/layout/Navbar';
-import { useEffect } from 'react';
+import { useEffect, ReactNode } from 'react';
 import config from '../config/stacks.config';
 import * as fcl from '@onflow/fcl';
 import FloatingChat from '@/components/layout/FloatingChat';
 
+interface RootLayoutProps {
+  children: ReactNode;
+}
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: RootLayoutProps) {
   // useEffect(() => {
   //   // Initialize Flow FCL
   //   fcl.config(config);
