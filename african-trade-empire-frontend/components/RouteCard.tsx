@@ -1,11 +1,38 @@
 'use client'
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, CircleDollarSign, ShieldCheck, Power, Trash } from 'lucide-react';
 
-const RouteCard = ({ route, isSelected, onSelect, onDelete, onToggleStatus }) => {
+interface TradeRoute {
+  id: number;
+  name: string;
+  start: string;
+  end: string;
+  distance: number;
+  profit: string;
+  risk: string;
+  duration: number;
+  resources: string[];
+  status: 'active' | 'inactive';
+  lastTraded: string;
+  description?: string;
+  merchants?: number;
+  completedTrades?: number;
+  successRate?: number;
+}
+
+interface RouteCardProps {
+  route: TradeRoute;
+  isSelected: boolean;
+  onSelect: () => void;
+  onDelete: () => void;
+  onToggleStatus: () => void;
+}
+
+const RouteCard: React.FC<RouteCardProps> = ({ route, isSelected, onSelect, onDelete, onToggleStatus }) => {
   // Determine risk color
-  const getRiskColor = (risk) => {
+  const getRiskColor = (risk: string) => {
     switch(risk.toLowerCase()) {
       case 'low':
         return 'text-green-400';
@@ -19,7 +46,7 @@ const RouteCard = ({ route, isSelected, onSelect, onDelete, onToggleStatus }) =>
   };
   
   // Stop event propagation for button clicks
-  const handleButtonClick = (e, callback) => {
+  const handleButtonClick = (e: React.MouseEvent, callback: () => void) => {
     e.stopPropagation();
     callback();
   };

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Github, Twitter, MessageCircle } from 'lucide-react';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 py-12">
