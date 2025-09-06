@@ -19,6 +19,24 @@ import {
   Filter
 } from 'lucide-react'
 import Link from 'next/link'
+
+interface TradeRoute {
+  id: number;
+  name: string;
+  start: string;
+  end: string;
+  distance: number;
+  profit: number;
+  risk: string;
+  duration: number;
+  resources: string[];
+  status: string;
+  lastTraded: string;
+  description: string;
+  merchants: number;
+  completedTrades: number;
+  successRate: number;
+}
 import TradeRouteMap from '../../components/TradeRouteMap'
 import RouteCard from '../../components/RouteCard'
 import NewRouteModal from '../../components/NewRouteModal'
@@ -116,11 +134,11 @@ const mockTradeRoutes = [
 export default function TradeRoutes() {
   const { user } = useAuth()
   const router = useRouter()
-  const [routes, setRoutes] = useState(mockTradeRoutes)
-  const [selectedRoute, setSelectedRoute] = useState(null)
-  const [showNewRouteModal, setShowNewRouteModal] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterStatus, setFilterStatus] = useState('all')
+  const [routes, setRoutes] = useState<TradeRoute[]>(mockTradeRoutes)
+  const [selectedRoute, setSelectedRoute] = useState<TradeRoute | null>(null)
+  const [showNewRouteModal, setShowNewRouteModal] = useState<boolean>(false)
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [filterStatus, setFilterStatus] = useState<string>('all')
   
   // Route stats
   const activeRoutes = routes.filter(route => route.status === 'active').length
@@ -145,22 +163,20 @@ export default function TradeRoutes() {
     return matchesSearch && matchesFilter;
   });
 
-  const handleDeleteRoute = (id) => {
+  const handleDeleteRoute = (id: number): void => {
     setRoutes(routes.filter(route => route.id !== id));
     if (selectedRoute && selectedRoute.id === id) {
       setSelectedRoute(null);
     }
   };
 
-  const handleToggleRouteStatus = (id) => {
-    setRoutes(routes.map(route => {
-      if (route.id === id) {
-        const newStatus = route.status === 'active' ? 'inactive' : 'active';
-        return { ...route, status: newStatus };
-      }
-      return route;
-    }));
-  };
+    const handleToggleRouteStatus = (routeId: number) => {
+    setRoutes(routes.map((route: TradeRoute) => 
+      route.id === routeId 
+        ? { ...route, status: route.status === 'active' ? 'inactive' : 'active' }
+        : route
+    ))
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -259,7 +275,7 @@ export default function TradeRoutes() {
             <p className="text-gray-400 text-sm">Visualize your trading network across Africa</p>
           </div>
           <div className="h-80 bg-gray-700/30 relative">
-            <TradeRouteMap routes={routes} selectedRouteId={selectedRoute?.id} onSelectRoute={(route) => setSelectedRoute(route)} />
+            <TradeRouteMap routes={routes} selectedRouteId={selectedRoute?.id} onSelectRoute={(route: TradeRoute) => setSelectedRoute(route)} />
           </div>
         </motion.div>
 
@@ -392,9 +408,8 @@ export default function TradeRoutes() {
         {showNewRouteModal && (
           <NewRouteModal 
             onClose={() => setShowNewRouteModal(false)}
-            onCreateRoute={(newRoute) => {
+            onCreateRoute={(newRoute: TradeRoute) => {
               const route = {
-                id: routes.length + 1,
                 ...newRoute,
                 status: 'active',
                 lastTraded: 'Just now',

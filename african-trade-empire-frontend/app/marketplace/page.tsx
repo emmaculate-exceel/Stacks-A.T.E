@@ -10,9 +10,64 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 
+interface NFTType {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  rarity?: string;
+  type: string;
+  collection?: string;
+  timeLeft?: string;
+  stats?: {
+    strength: number;
+    speed: number;
+    charisma: number;
+  };
+  description?: string;
+  seller?: string;
+  isActive?: boolean;
+}
+
+interface AIAnalysis {
+  predictedPrice: {
+    low: number;
+    expected: number;
+    high: number;
+  };
+  marketTrend: {
+    direction: string;
+    percentage: string;
+    volume: number;
+  };
+  recommendation: {
+    action: string;
+    reason: string;
+  };
+  confidence: number;
+  riskLevel: {
+    level: string;
+    factors: string[];
+  };
+}
+
+interface NFTCardProps {
+  nft: NFTType;
+  onSelect: (nft: NFTType) => void;
+  isSelected: boolean;
+}
+
+interface FilterBarProps {
+  onFilterChange: (filters: any) => void;
+}
+
+interface SudoCatAnalysisProps {
+  selectedNFT: NFTType | null;
+}
+
 // NFT Card Component
-const NFTCard = ({ nft, onSelect, isSelected }) => {
-  const [isLiked, setIsLiked] = useState(false);
+const NFTCard: React.FC<NFTCardProps> = ({ nft, onSelect, isSelected }) => {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
 
   return (
     <motion.div
@@ -80,7 +135,7 @@ const NFTCard = ({ nft, onSelect, isSelected }) => {
 };
 
 // Filter Bar Component
-const FilterBar = ({ onFilterChange }) => {
+const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
   const filters = [
     { label: 'All Items', value: 'all' },
     { label: 'Merchants', value: 'merchants' },
@@ -163,10 +218,10 @@ const StatsBar = () => {
 };
 
 // Main Marketplace Component
-const Marketplace = () => {
+const Marketplace: React.FC = () => {
   const { user } = useAuth();
-  const [selectedNFT, setSelectedNFT] = useState(null);
-  const [nfts, setNfts] = useState([
+  const [selectedNFT, setSelectedNFT] = useState<NFTType | null>(null);
+  const [nfts, setNfts] = useState<NFTType[]>([
     {
       id: 1,
       name: 'Desert Caravan Leader',
@@ -174,7 +229,11 @@ const Marketplace = () => {
       type: 'Merchant',
       price: 150,
       timeLeft: '3h 24m',
-      image: '/extra.jpg'
+      image: '/extra.jpg',
+      rarity: 'Common',
+      stats: { strength: 75, speed: 60, charisma: 85 },
+      description: 'A seasoned merchant who leads caravans across the Sahara Desert.',
+      seller: 'ST1MERCHANT1'
     },
     {
       id: 2,
@@ -183,7 +242,11 @@ const Marketplace = () => {
       type: 'Route',
       price: 275,
       timeLeft: '1d 12h',
-      image: '/002.jpeg'
+      image: '/002.jpeg',
+      rarity: 'Rare',
+      stats: { strength: 80, speed: 90, charisma: 70 },
+      description: 'A crucial junction on the ancient Silk Road trade network.',
+      seller: 'ST1TRADER2'
     },
     {
       id: 3,
@@ -370,7 +433,7 @@ const Marketplace = () => {
         <StatsBar />
 
         {/* Filters and Search */}
-        <FilterBar />
+        <FilterBar onFilterChange={() => {}} />
 
         {/* Main Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -401,9 +464,9 @@ const Marketplace = () => {
 };
 
 // SudoCat Analysis Component (keeping your existing implementation)
-const SudoCatAnalysis = ({ selectedNFT }) => {
-  const [aiAnalysis, setAiAnalysis] = useState(null);
-  const [loading, setLoading] = useState(false);
+const SudoCatAnalysis: React.FC<SudoCatAnalysisProps> = ({ selectedNFT }) => {
+  const [aiAnalysis, setAiAnalysis] = useState<AIAnalysis | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (selectedNFT) {
@@ -411,7 +474,7 @@ const SudoCatAnalysis = ({ selectedNFT }) => {
     }
   }, [selectedNFT]);
 
-  const analyzeTrade = async (nft) => {
+  const analyzeTrade = async (nft: NFTType): Promise<void> => {
     setLoading(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 1500));

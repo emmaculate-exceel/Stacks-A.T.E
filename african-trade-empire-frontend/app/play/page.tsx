@@ -10,7 +10,7 @@ import CaravanRoutesGame from '@/components/games/CaravanRoutesGames';
 
 export default function Play() {
   const { user } = useAuth();
-  const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedGame, setSelectedGame] = useState<string | null>(null);
   
   const games = [
     {
