@@ -198,19 +198,19 @@ export default function TradeRoutes() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="min-h-screen bg-gray-900 pt-16 sm:pt-18 lg:pt-20 pb-6 sm:pb-8 lg:pb-10">
+      <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8 flex flex-wrap justify-between items-center"
+          className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:flex-wrap justify-between items-start sm:items-center gap-4"
         >
-          <div>
-            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500">
+          <div className="w-full sm:w-auto">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500">
               Trade Routes
             </h1>
-            <p className="text-gray-400 mt-1">
+            <p className="text-sm sm:text-base text-gray-400 mt-1">
               Establish and manage your trading network across Africa
             </p>
           </div>
@@ -218,10 +218,11 @@ export default function TradeRoutes() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowNewRouteModal(true)}
-            className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-lg font-semibold text-white flex items-center gap-2 mt-4 sm:mt-0"
+            className="px-3 sm:px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-lg font-semibold text-white flex items-center gap-2 text-sm sm:text-base whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
           >
             <Plus className="w-4 h-4" />
-            Create New Route
+            <span className="hidden xs:inline">Create New Route</span>
+            <span className="xs:hidden">New Route</span>
           </motion.button>
         </motion.div>
 
@@ -230,36 +231,39 @@ export default function TradeRoutes() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8"
         >
-          <motion.div variants={itemVariants} className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6 hover:border-yellow-500/30 transition-all duration-300">
+          <motion.div variants={itemVariants} className="bg-gray-800/50 rounded-lg lg:rounded-xl border border-gray-700/50 p-4 sm:p-6 hover:border-yellow-500/30 transition-all duration-300">
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
-                <Route className="w-5 h-5 text-white" />
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
+                <Route className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <h3 className="text-gray-300 font-medium">Active Routes</h3>
+              <h3 className="text-gray-300 font-medium text-sm sm:text-base">Active Routes</h3>
             </div>
-            <p className="text-2xl font-bold text-white">{activeRoutes} <span className="text-sm text-gray-400">/ {routes.length}</span></p>
+            <p className="text-xl sm:text-2xl font-bold text-white">{activeRoutes} <span className="text-xs sm:text-sm text-gray-400">/ {routes.length}</span></p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6 hover:border-yellow-500/30 transition-all duration-300">
+          <motion.div variants={itemVariants} className="bg-gray-800/50 rounded-lg lg:rounded-xl border border-gray-700/50 p-4 sm:p-6 hover:border-yellow-500/30 transition-all duration-300">
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
-                <CircleDollarSign className="w-5 h-5 text-white" />
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
+                <CircleDollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <h3 className="text-gray-300 font-medium">Total Profits</h3>
+              <h3 className="text-gray-300 font-medium text-sm sm:text-base">Total Profits</h3>
             </div>
-            <p className="text-2xl font-bold text-white">{totalProfit.toLocaleString()} <span className="text-sm text-gray-400">FLOW</span></p>
+            <p className="text-xl sm:text-2xl font-bold text-white break-all">
+              {totalProfit.toLocaleString()} 
+              <span className="text-xs sm:text-sm text-gray-400 ml-1">FLOW</span>
+            </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6 hover:border-yellow-500/30 transition-all duration-300">
+          <motion.div variants={itemVariants} className="bg-gray-800/50 rounded-lg lg:rounded-xl border border-gray-700/50 p-4 sm:p-6 hover:border-yellow-500/30 transition-all duration-300 sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
-                <ShieldCheck className="w-5 h-5 text-white" />
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <h3 className="text-gray-300 font-medium">Success Rate</h3>
+              <h3 className="text-gray-300 font-medium text-sm sm:text-base">Success Rate</h3>
             </div>
-            <p className="text-2xl font-bold text-white">{avgSuccessRate}%</p>
+            <p className="text-xl sm:text-2xl font-bold text-white">{avgSuccessRate}%</p>
           </motion.div>
         </motion.div>
 
@@ -268,95 +272,118 @@ export default function TradeRoutes() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mb-8 bg-gray-800/50 rounded-xl border border-gray-700/50 overflow-hidden"
+          className="mb-6 sm:mb-8 bg-gray-800/50 rounded-lg lg:rounded-xl border border-gray-700/50 overflow-hidden"
         >
-          <div className="p-6 border-b border-gray-700/50">
-            <h2 className="text-xl font-bold text-white">Routes Map</h2>
-            <p className="text-gray-400 text-sm">Visualize your trading network across Africa</p>
+          <div className="p-4 sm:p-6 border-b border-gray-700/50">
+            <h2 className="text-lg sm:text-xl font-bold text-white">Routes Map</h2>
+            <p className="text-gray-400 text-xs sm:text-sm">Visualize your trading network across Africa</p>
           </div>
-          <div className="h-80 bg-gray-700/30 relative">
+          <div className="h-48 sm:h-56 md:h-64 lg:h-80 bg-gray-700/30 relative">
             <TradeRouteMap routes={routes} selectedRouteId={selectedRoute?.id} onSelectRoute={(route: TradeRoute) => setSelectedRoute(route)} />
           </div>
         </motion.div>
 
         {/* Routes List & Details Panel */}
-        <div className="flex flex-col lg:flex-row gap-6">
+        {/* Routes List & Details Panel */}
+        <div className="flex flex-col xl:flex-row gap-4 sm:gap-6">
           {/* Left column: Search and list */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
-            className="lg:w-3/5"
+            className="xl:w-3/5"
           >
             {/* Search & Filter */}
-            <div className="mb-4 flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search routes by name or location..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:border-yellow-500/50 focus:outline-none transition-all duration-300"
-                />
+            <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-4">
+              <div className="flex flex-col xs:flex-row gap-3 sm:gap-4">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search routes..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg lg:rounded-xl text-white placeholder-gray-400 focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/20 transition-all duration-200 text-sm sm:text-base"
+                  />
+                </div>
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  className="px-3 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg lg:rounded-xl text-white focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/20 transition-all duration-200 text-sm sm:text-base min-w-0 xs:min-w-[120px]"
+                >
+                  <option value="all">All Status</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
               </div>
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="bg-gray-800/50 border border-gray-700/50 rounded-lg text-white px-4 py-3 focus:border-yellow-500/50 focus:outline-none transition-all duration-300"
-              >
-                <option value="all">All Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
             </div>
 
-            {/* Routes List */}
-            <div className="space-y-4 mb-6">
-              <AnimatePresence>
-                {filteredRoutes.length > 0 ? (
-                  filteredRoutes.map((route) => (
-                    <RouteCard
-                      key={route.id}
-                      route={route}
-                      isSelected={selectedRoute?.id === route.id}
-                      onSelect={() => setSelectedRoute(route)}
-                      onDelete={() => handleDeleteRoute(route.id)}
-                      onToggleStatus={() => handleToggleRouteStatus(route.id)}
-                    />
-                  ))
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="bg-gray-800/30 rounded-lg p-6 text-center"
-                  >
-                    <p className="text-gray-400">No trade routes match your search criteria.</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            {/* Routes Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+              {routes
+                .filter(route => {
+                  const matchesSearch = route.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                      route.start.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                      route.end.toLowerCase().includes(searchTerm.toLowerCase());
+                  const matchesStatus = filterStatus === 'all' || route.status === filterStatus;
+                  return matchesSearch && matchesStatus;
+                })
+                .map((route) => (
+                  <RouteCard
+                    key={route.id}
+                    route={route}
+                    isSelected={selectedRoute?.id === route.id}
+                    onSelect={() => setSelectedRoute(route)}
+                    onDelete={() => {
+                      setRoutes(routes.filter(r => r.id !== route.id));
+                      if (selectedRoute?.id === route.id) {
+                        setSelectedRoute(null);
+                      }
+                    }}
+                    onToggleStatus={() => {
+                      setRoutes(routes.map(r => 
+                        r.id === route.id 
+                          ? { ...r, status: r.status === 'active' ? 'inactive' : 'active' }
+                          : r
+                      ));
+                    }}
+                  />
+                ))}
             </div>
+
+            {routes.filter(route => {
+              const matchesSearch = route.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                  route.start.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                  route.end.toLowerCase().includes(searchTerm.toLowerCase());
+              const matchesStatus = filterStatus === 'all' || route.status === filterStatus;
+              return matchesSearch && matchesStatus;
+            }).length === 0 && (
+              <div className="text-center py-8 sm:py-12">
+                <Route className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mx-auto mb-4" />
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-400 mb-2">No routes found</h3>
+                <p className="text-gray-500 text-sm sm:text-base">Try adjusting your search or filters</p>
+              </div>
+            )}
 
             {/* Navigation Links */}
-            <div className="flex justify-between mt-8">
+            <div className="flex flex-col xs:flex-row justify-between gap-4 mt-6 sm:mt-8">
               <Link href="/dashboard">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 text-gray-400 hover:text-white"
+                  className="flex items-center justify-center xs:justify-start gap-2 text-gray-400 hover:text-white p-2 rounded-lg border border-gray-700/50 hover:border-gray-600/50 transition-all duration-200"
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  Back to Dashboard
+                  <span className="text-sm sm:text-base">Back to Dashboard</span>
                 </motion.div>
               </Link>
               <Link href="/marketplace">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 text-gray-400 hover:text-white"
+                  className="flex items-center justify-center xs:justify-end gap-2 text-gray-400 hover:text-white p-2 rounded-lg border border-gray-700/50 hover:border-gray-600/50 transition-all duration-200"
                 >
-                  Visit Marketplace
+                  <span className="text-sm sm:text-base">Visit Marketplace</span>
                   <ArrowRight className="w-4 h-4" />
                 </motion.div>
               </Link>
@@ -368,7 +395,7 @@ export default function TradeRoutes() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8 }}
-            className="lg:w-2/5"
+            className="xl:w-2/5"
           >
             <AnimatePresence mode="wait">
               {selectedRoute ? (
@@ -384,17 +411,18 @@ export default function TradeRoutes() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-6 h-full flex flex-col items-center justify-center text-center"
+                  className="bg-gray-800/50 rounded-lg lg:rounded-xl border border-gray-700/50 p-4 sm:p-6 h-full flex flex-col items-center justify-center text-center"
                 >
-                  <Route className="w-16 h-16 text-gray-600 mb-4" />
-                  <h3 className="text-xl font-bold text-white mb-2">No Route Selected</h3>
-                  <p className="text-gray-400 mb-6">Select a trade route from the list to view details</p>
+                  <Route className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mb-3 sm:mb-4" />
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">No Route Selected</h3>
+                  <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">Select a trade route from the list to view details</p>
                   <button
                     onClick={() => setShowNewRouteModal(true)}
-                    className="px-4 py-2 bg-gradient-to-r from-yellow-500/30 to-orange-600/30 hover:from-yellow-500 hover:to-orange-600 rounded-lg font-semibold text-white flex items-center gap-2 transition-all duration-300"
+                    className="px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-yellow-500/30 to-orange-600/30 hover:from-yellow-500 hover:to-orange-600 rounded-lg font-semibold text-white flex items-center gap-2 transition-all duration-300 text-sm sm:text-base"
                   >
                     <Plus className="w-4 h-4" />
-                    Create New Route
+                    <span className="hidden xs:inline">Create New Route</span>
+                    <span className="xs:hidden">New Route</span>
                   </button>
                 </motion.div>
               )}

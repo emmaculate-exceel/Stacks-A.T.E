@@ -72,7 +72,7 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, onSelect, isSelected }) => {
   return (
     <motion.div
       whileHover={{ y: -5 }}
-      className={`bg-gray-800/50 rounded-xl overflow-hidden border ${
+      className={`bg-gray-800/50 rounded-lg lg:rounded-xl overflow-hidden border ${
         isSelected ? 'border-purple-500' : 'border-gray-700/50'
       } transition-all duration-300 hover:border-purple-500/50`}
     >
@@ -80,22 +80,22 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, onSelect, isSelected }) => {
         <img 
           src={nft.image} 
           alt={nft.name}
-          className="w-full h-48 object-cover"
+          className="w-full h-36 sm:h-44 lg:h-48 object-cover"
         />
-        <div className="absolute top-2 right-2 flex gap-2">
+        <div className="absolute top-2 right-2 flex gap-1.5 sm:gap-2">
           <button 
             onClick={(e) => {
               e.stopPropagation();
               setIsLiked(!isLiked);
             }}
-            className="p-2 bg-gray-900/80 rounded-full hover:bg-gray-800"
+            className="p-1.5 sm:p-2 bg-gray-900/80 rounded-full hover:bg-gray-800 transition-colors"
           >
             <Heart 
-              className={`w-4 h-4 ${isLiked ? 'text-red-500 fill-red-500' : 'text-white'}`}
+              className={`w-3 h-3 sm:w-4 sm:h-4 ${isLiked ? 'text-red-500 fill-red-500' : 'text-white'}`}
             />
           </button>
-          <button className="p-2 bg-gray-900/80 rounded-full hover:bg-gray-800">
-            <Share2 className="w-4 h-4 text-white" />
+          <button className="p-1.5 sm:p-2 bg-gray-900/80 rounded-full hover:bg-gray-800 transition-colors">
+            <Share2 className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
           </button>
         </div>
         <div className="absolute bottom-2 left-2">
@@ -105,28 +105,29 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, onSelect, isSelected }) => {
         </div>
       </div>
       
-      <div className="p-4">
+      <div className="p-3 sm:p-4">
         <div className="flex justify-between items-start mb-2">
-          <div>
-            <h3 className="font-bold text-white">{nft.name}</h3>
-            <p className="text-sm text-gray-400">{nft.collection}</p>
+          <div className="min-w-0 flex-1 mr-2">
+            <h3 className="font-bold text-white text-sm sm:text-base truncate">{nft.name}</h3>
+            <p className="text-xs sm:text-sm text-gray-400 truncate">{nft.collection}</p>
           </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-400">Price</p>
-            <p className="font-bold text-white">{nft.price} STX</p>
+          <div className="text-right flex-shrink-0">
+            <p className="text-xs sm:text-sm text-gray-400">Price</p>
+            <p className="font-bold text-white text-sm sm:text-base">{nft.price} STX</p>
           </div>
         </div>
         
-        <div className="flex justify-between items-center mt-4">
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-gray-400">{nft.timeLeft}</span>
+        <div className="flex justify-between items-center mt-3 sm:mt-4">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1">
+            <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
+            <span className="text-xs sm:text-sm text-gray-400 truncate">{nft.timeLeft}</span>
           </div>
           <button
             onClick={() => onSelect(nft)}
-            className="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-medium text-white transition-colors duration-300"
+            className="px-3 py-1.5 sm:px-4 sm:py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-xs sm:text-sm font-medium text-white transition-colors duration-300 flex-shrink-0"
           >
-            View Details
+            <span className="hidden xs:inline">View Details</span>
+            <span className="xs:hidden">View</span>
           </button>
         </div>
       </div>
@@ -151,23 +152,23 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
   ];
 
   return (
-    <div className="bg-gray-800/50 rounded-xl p-4 mb-6 border border-gray-700/50">
-      <div className="flex flex-wrap gap-4 items-center justify-between">
-        <div className="flex items-center gap-4">
+    <div className="bg-gray-800/50 rounded-lg lg:rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 border border-gray-700/50">
+      <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 items-stretch lg:items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 flex-1">
           <div className="relative">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search NFTs..."
-              className="pl-10 pr-4 py-2 bg-gray-900 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full pl-10 pr-4 py-2 sm:py-2.5 bg-gray-900 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
             />
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
             {filters.map((filter) => (
               <button
                 key={filter.value}
-                className="px-4 py-2 bg-gray-900 rounded-lg text-sm text-white hover:bg-gray-700 transition-colors duration-300"
+                className="px-3 sm:px-4 py-2 bg-gray-900 rounded-lg text-xs sm:text-sm text-white hover:bg-gray-700 transition-colors duration-300 whitespace-nowrap flex-shrink-0"
               >
                 {filter.label}
               </button>
@@ -175,16 +176,16 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <select className="appearance-none px-4 py-2 pr-10 bg-gray-900 rounded-lg text-sm text-white hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="relative flex-1 sm:flex-initial">
+            <select className="appearance-none w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 bg-gray-900 rounded-lg text-xs sm:text-sm text-white hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500">
               {sorts.map((sort) => (
                 <option key={sort.value} value={sort.value}>
                   {sort.label}
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+            <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
           </div>
           
           <button className="p-2 bg-gray-900 rounded-lg hover:bg-gray-700 transition-colors duration-300">

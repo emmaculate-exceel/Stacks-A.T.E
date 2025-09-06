@@ -27,11 +27,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="description" content="Build your trading empire in the heart of Africa" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body>
+      <body className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen">
         <AuthProvider>
-          <Navbar />
-          <main>{children}</main>
-          <FloatingChat/>
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-1 w-full overflow-x-hidden">
+              <div className="w-full max-w-[100vw] min-h-[calc(100vh-64px)]">
+                {children}
+              </div>
+            </main>
+            <FloatingChat/>
+          </div>
         </AuthProvider>
       </body>
     </html>
