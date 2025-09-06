@@ -22,7 +22,7 @@ interface TradeRoute {
   start: string;
   end: string;
   distance: number;
-  profit: string;
+  profit: number; // Changed from string to number
   risk: string;
   duration: number;
   resources: string[];

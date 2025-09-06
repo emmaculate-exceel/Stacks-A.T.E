@@ -1,11 +1,50 @@
 'use client'
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, Route as RouteIcon, Plus } from 'lucide-react';
 
-const NewRouteModal = ({ onClose, onCreateRoute }) => {
-  const [formData, setFormData] = useState({
+interface TradeRoute {
+  id: number;
+  name: string;
+  start: string;
+  end: string;
+  distance: number;
+  profit: number; // Changed from string to number to match actual data structure
+  risk: string;
+  duration: number;
+  resources: string[];
+  status: 'active' | 'inactive';
+  lastTraded: string;
+  description?: string;
+  merchants?: number;
+  completedTrades?: number;
+  successRate?: number;
+}
+
+interface FormData {
+  name: string;
+  start: string;
+  end: string;
+  distance: string;
+  profit: string;
+  risk: string;
+  duration: string;
+  resources: string[];
+  description: string;
+}
+
+interface FormErrors {
+  [key: string]: string | null;
+}
+
+interface NewRouteModalProps {
+  onClose: () => void;
+  onCreateRoute: (route: TradeRoute) => void;
+}
+
+const NewRouteModal: React.FC<NewRouteModalProps> = ({ onClose, onCreateRoute }) => {
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     start: '',
     end: '',
@@ -17,9 +56,9 @@ const NewRouteModal = ({ onClose, onCreateRoute }) => {
     description: ''
   });
   
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
   
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -35,7 +74,7 @@ const NewRouteModal = ({ onClose, onCreateRoute }) => {
     }
   };
   
-  const handleResourceChange = (index, value) => {
+  const handleResourceChange = (index: number, value: string) => {
     const updatedResources = [...formData.resources];
     updatedResources[index] = value;
     
@@ -52,7 +91,7 @@ const NewRouteModal = ({ onClose, onCreateRoute }) => {
     });
   };
   
-  const removeResourceField = (index) => {
+  const removeResourceField = (index: number) => {
     const updatedResources = [...formData.resources];
     updatedResources.splice(index, 1);
     
@@ -62,8 +101,8 @@ const NewRouteModal = ({ onClose, onCreateRoute }) => {
     });
   };
   
-  const validateForm = () => {
-    const newErrors = {};
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
     
     if (!formData.name.trim()) newErrors.name = 'Route name is required';
     if (!formData.start.trim()) newErrors.start = 'Starting location is required';
@@ -73,17 +112,17 @@ const NewRouteModal = ({ onClose, onCreateRoute }) => {
     }
     
     if (!formData.distance) newErrors.distance = 'Distance is required';
-    else if (isNaN(formData.distance) || Number(formData.distance) <= 0) {
+    else if (isNaN(Number(formData.distance)) || Number(formData.distance) <= 0) {
       newErrors.distance = 'Distance must be a positive number';
     }
     
     if (!formData.profit) newErrors.profit = 'Profit is required';
-    else if (isNaN(formData.profit) || Number(formData.profit) <= 0) {
+    else if (isNaN(Number(formData.profit)) || Number(formData.profit) <= 0) {
       newErrors.profit = 'Profit must be a positive number';
     }
     
     if (!formData.duration) newErrors.duration = 'Duration is required';
-    else if (isNaN(formData.duration) || Number(formData.duration) <= 0) {
+    else if (isNaN(Number(formData.duration)) || Number(formData.duration) <= 0) {
       newErrors.duration = 'Duration must be a positive number';
     }
     
@@ -96,20 +135,32 @@ const NewRouteModal = ({ onClose, onCreateRoute }) => {
     return Object.keys(newErrors).length === 0;
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (validateForm()) {
       // Filter out empty resources
       const filteredResources = formData.resources.filter(r => r.trim());
       
-      onCreateRoute({
-        ...formData,
+      const newRoute: TradeRoute = {
+        id: Date.now(), // This should be handled by the parent component
+        name: formData.name,
+        start: formData.start,
+        end: formData.end,
         distance: Number(formData.distance),
-        profit: Number(formData.profit),
+        profit: Number(formData.profit), // Convert to number to match interface
+        risk: formData.risk,
         duration: Number(formData.duration),
-        resources: filteredResources
-      });
+        resources: filteredResources,
+        status: 'active',
+        lastTraded: 'Never',
+        description: formData.description,
+        merchants: 0,
+        completedTrades: 0,
+        successRate: 0
+      };
+      
+      onCreateRoute(newRoute);
     }
   };
   

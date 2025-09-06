@@ -3,15 +3,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Minimize2, Send, User, Bot, Loader } from 'lucide-react';
 
-const FloatingChat = ({
+interface Message {
+    id: string;
+    type: 'user' | 'bot';
+    content: string;
+    timestamp: Date;
+}
+
+interface FloatingChatProps {
+    position?: 'bottom-right' | 'bottom-left';
+    companyName?: string;
+    greeting?: string;
+    placeholder?: string;
+}
+
+const FloatingChat: React.FC<FloatingChatProps> = ({
     position = 'bottom-right',
     companyName = 'A.T Support',
     greeting = 'Welcome to A.T Empire! How can we assist you with our AI solutions today?',
     placeholder = 'Type your message here...'
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [isMinimized, setIsMinimized] = useState(false);
-    const [messages, setMessages] = useState([
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isMinimized, setIsMinimized] = useState<boolean>(false);
+    const [messages, setMessages] = useState<Message[]>([
         {
             id: '1',
             type: 'bot',
@@ -19,12 +33,12 @@ const FloatingChat = ({
             timestamp: new Date()
         }
     ]);
-    const [inputValue, setInputValue] = useState('');
-    const [isTyping, setIsTyping] = useState(false);
+    const [inputValue, setInputValue] = useState<string>('');
+    const [isTyping, setIsTyping] = useState<boolean>(false);
 
-    const messagesEndRef = useRef(null);
-    const chatContainerRef = useRef(null);
-    const inputRef = useRef(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const chatContainerRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         scrollToBottom();
@@ -34,11 +48,11 @@ const FloatingChat = ({
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!inputValue.trim()) return;
 
-        const newMessage = {
+        const newMessage: Message = {
             id: Date.now().toString(),
             type: 'user',
             content: inputValue.trim(),
@@ -72,7 +86,7 @@ const FloatingChat = ({
             if (data.choices && data.choices[0] && data.choices[0].message.content) {
                 const botMessage = data.choices[0].message.content;
 
-                const botResponse = {
+                const botResponse: Message = {
                     id: (Date.now() + 1).toString(),
                     type: 'bot',
                     content: botMessage,
@@ -85,7 +99,7 @@ const FloatingChat = ({
             }
         } catch (error) {
             console.error("Error fetching Sudocat AI response:", error);
-            const errorMessage = {
+            const errorMessage: Message = {
                 id: (Date.now() + 1).toString(),
                 type: 'bot',
                 content: "I'm sorry, there was an error processing your message.",
@@ -97,7 +111,7 @@ const FloatingChat = ({
         }
     };
 
-    const handleKeyPress = (e) => {
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSubmit(e);

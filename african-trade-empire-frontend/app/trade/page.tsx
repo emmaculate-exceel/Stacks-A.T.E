@@ -26,16 +26,16 @@ interface TradeRoute {
   start: string;
   end: string;
   distance: number;
-  profit: number;
+  profit: number; // Changed from string to number to match mock data
   risk: string;
   duration: number;
   resources: string[];
-  status: string;
+  status: 'active' | 'inactive';
   lastTraded: string;
-  description: string;
-  merchants: number;
-  completedTrades: number;
-  successRate: number;
+  description?: string;
+  merchants?: number;
+  completedTrades?: number;
+  successRate?: number;
 }
 import TradeRouteMap from '../../components/TradeRouteMap'
 import RouteCard from '../../components/RouteCard'
@@ -43,7 +43,7 @@ import NewRouteModal from '../../components/NewRouteModal'
 import RouteDetailPanel from '../../components/RouteDetailPanel'
 
 // Mock data for trade routes
-const mockTradeRoutes = [
+const mockTradeRoutes: TradeRoute[] = [
   {
     id: 1,
     name: "Gold Coast Route",
@@ -54,7 +54,7 @@ const mockTradeRoutes = [
     risk: "Low",
     duration: 3,
     resources: ["Gold", "Silk", "Spices"],
-    status: "active",
+    status: "active" as const,
     lastTraded: "2 hours ago",
     description: "A lucrative coastal route connecting major trading ports with minimal risk.",
     merchants: 3,
@@ -71,7 +71,7 @@ const mockTradeRoutes = [
     risk: "High",
     duration: 14,
     resources: ["Salt", "Gold", "Ivory"],
-    status: "active",
+    status: "active" as const,
     lastTraded: "1 day ago",
     description: "A dangerous but profitable route across the Sahara Desert. Only for the most experienced merchants.",
     merchants: 2,
@@ -88,7 +88,7 @@ const mockTradeRoutes = [
     risk: "Medium",
     duration: 2,
     resources: ["Spices", "Textiles", "Pottery"],
-    status: "inactive",
+    status: "inactive" as const,
     lastTraded: "5 days ago",
     description: "Connect with the rich trading networks of the Swahili Coast.",
     merchants: 0,
@@ -105,7 +105,7 @@ const mockTradeRoutes = [
     risk: "Medium",
     duration: 10,
     resources: ["Ivory", "Gold", "Textiles"],
-    status: "active",
+    status: "active" as const,
     lastTraded: "3 hours ago",
     description: "Follow the Nile south to trade valuable ivory and gold.",
     merchants: 4,
@@ -122,7 +122,7 @@ const mockTradeRoutes = [
     risk: "Low",
     duration: 5,
     resources: ["Diamonds", "Wine", "Wool"],
-    status: "active",
+    status: "active" as const,
     lastTraded: "12 hours ago",
     description: "A safe coastal route along the southernmost tip of Africa.",
     merchants: 2,
@@ -144,7 +144,7 @@ export default function TradeRoutes() {
   const activeRoutes = routes.filter(route => route.status === 'active').length
   const totalProfit = routes.reduce((sum, route) => sum + route.profit, 0)
   const avgSuccessRate = Math.round(
-    routes.reduce((sum, route) => sum + route.successRate, 0) / routes.length
+    routes.reduce((sum, route) => sum + (route.successRate || 0), 0) / routes.length
   )
 
 //   useEffect(() => {
@@ -409,15 +409,7 @@ export default function TradeRoutes() {
           <NewRouteModal 
             onClose={() => setShowNewRouteModal(false)}
             onCreateRoute={(newRoute: TradeRoute) => {
-              const route = {
-                ...newRoute,
-                status: 'active',
-                lastTraded: 'Just now',
-                merchants: 0,
-                completedTrades: 0,
-                successRate: 0
-              };
-              setRoutes([...routes, route]);
+              setRoutes([...routes, newRoute]);
               setShowNewRouteModal(false);
             }}
           />
