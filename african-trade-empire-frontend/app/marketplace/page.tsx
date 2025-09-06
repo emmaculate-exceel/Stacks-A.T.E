@@ -420,12 +420,12 @@ const Marketplace: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
             NFT Marketplace
           </h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-gray-400 mt-1 text-sm sm:text-base">
             Discover, trade, and collect unique African trade assets
           </p>
         </motion.div>
@@ -437,10 +437,10 @@ const Marketplace: React.FC = () => {
         <FilterBar onFilterChange={() => {}} />
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 sm:gap-6">
           {/* NFT Grid */}
-          <div className="col-span-1 md:col-span-2 lg:col-span-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="col-span-1 xl:col-span-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6">
               {nfts.map((nft) => (
                 <NFTCard
                   key={nft.id}
@@ -453,8 +453,8 @@ const Marketplace: React.FC = () => {
           </div>
 
           {/* SudoCat Analysis Panel */}
-          <div className="col-span-1">
-            <div className="sticky top-24">
+          <div className="col-span-1 xl:col-span-1">
+            <div className="sticky top-20 sm:top-24">
               <SudoCatAnalysis selectedNFT={selectedNFT} />
             </div>
           </div>
@@ -512,54 +512,55 @@ const SudoCatAnalysis: React.FC<SudoCatAnalysisProps> = ({ selectedNFT }) => {
 
   if (!selectedNFT) {
     return (
-      <div className="bg-gray-800/50 rounded-xl p-6 border border-purple-500/20">
+      <div className="bg-gray-800/50 rounded-lg lg:rounded-xl p-4 sm:p-6 border border-purple-500/20">
         <div className="flex items-center gap-2 text-gray-400">
-          <Brain className="w-5 h-5" />
-          <p>Select an NFT for SudoCat analysis</p>
+          <Brain className="w-4 h-4 sm:w-5 sm:h-5" />
+          <p className="text-sm sm:text-base">Select an NFT for SudoCat analysis</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-800/50 rounded-xl p-6 border border-purple-500/20">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-bold text-white flex items-center gap-2">
-          <Brain className="w-5 h-5 text-purple-400" />
-          SudoCat AI Analysis
+    <div className="bg-gray-800/50 rounded-lg lg:rounded-xl p-4 sm:p-6 border border-purple-500/20">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+          <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
+          <span className="hidden xs:inline">SudoCat AI Analysis</span>
+          <span className="xs:hidden">AI Analysis</span>
         </h3>
         {loading ? (
-          <div className="animate-pulse text-purple-400">Processing...</div>
+          <div className="animate-pulse text-purple-400 text-xs sm:text-sm">Processing...</div>
         ) : (
-          <div className="text-green-400">Analysis Complete</div>
+          <div className="text-green-400 text-xs sm:text-sm">Analysis Complete</div>
         )}
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-purple-500/20 border-t-purple-500 rounded-full" />
+        <div className="flex items-center justify-center h-48 sm:h-64">
+          <div className="animate-spin h-6 w-6 sm:h-8 sm:w-8 border-4 border-purple-500/20 border-t-purple-500 rounded-full" />
         </div>
       ) : aiAnalysis && (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Price Prediction */}
-          <div className="bg-gray-900/50 rounded-lg p-4">
-            <h4 className="text-sm font-medium text-gray-400 mb-3">Price Prediction</h4>
-            <div className="grid grid-cols-3 gap-4">
+          <div className="bg-gray-900/50 rounded-lg p-3 sm:p-4">
+            <h4 className="text-xs sm:text-sm font-medium text-gray-400 mb-2 sm:mb-3">Price Prediction</h4>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
               <div>
                 <p className="text-xs text-gray-500">Low</p>
-                <p className="text-lg font-bold text-red-400">
+                <p className="text-sm sm:text-lg font-bold text-red-400">
                   {aiAnalysis.predictedPrice.low.toFixed(2)} FLOW
                 </p>
               </div>
               <div>
                 <p className="text-xs text-gray-500">Expected</p>
-                <p className="text-lg font-bold text-green-400">
+                <p className="text-sm sm:text-lg font-bold text-green-400">
                   {aiAnalysis.predictedPrice.expected.toFixed(2)} FLOW
                 </p>
               </div>
               <div>
                 <p className="text-xs text-gray-500">High</p>
-                <p className="text-lg font-bold text-blue-400">
+                <p className="text-sm sm:text-lg font-bold text-blue-400">
                   {aiAnalysis.predictedPrice.high.toFixed(2)} FLOW
                 </p>
               </div>
@@ -567,16 +568,16 @@ const SudoCatAnalysis: React.FC<SudoCatAnalysisProps> = ({ selectedNFT }) => {
           </div>
 
           {/* Market Trend */}
-          <div className="bg-gray-900/50 rounded-lg p-4">
-            <h4 className="text-sm font-medium text-gray-400 mb-3">Market Trend</h4>
+          <div className="bg-gray-900/50 rounded-lg p-3 sm:p-4">
+            <h4 className="text-xs sm:text-sm font-medium text-gray-400 mb-2 sm:mb-3">Market Trend</h4>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 {aiAnalysis.marketTrend.direction === 'up' ? (
-                  <TrendingUp className="w-5 h-5 text-green-400" />
+                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
                 ) : (
-                  <TrendingDown className="w-5 h-5 text-red-400" />
+                  <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
                 )}
-                <span className={`text-lg font-bold ${
+                <span className={`text-sm sm:text-lg font-bold ${
                   aiAnalysis.marketTrend.direction === 'up' 
                     ? 'text-green-400' 
                     : 'text-red-400'
@@ -584,45 +585,45 @@ const SudoCatAnalysis: React.FC<SudoCatAnalysisProps> = ({ selectedNFT }) => {
                   {aiAnalysis.marketTrend.percentage}%
                 </span>
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xs sm:text-sm text-gray-400">
                 Volume: {aiAnalysis.marketTrend.volume} FLOW
               </div>
             </div>
           </div>
 
           {/* AI Recommendation */}
-          <div className="bg-gray-900/50 rounded-lg p-4">
-            <h4 className="text-sm font-medium text-gray-400 mb-3">AI Recommendation</h4>
+          <div className="bg-gray-900/50 rounded-lg p-3 sm:p-4">
+            <h4 className="text-xs sm:text-sm font-medium text-gray-400 mb-2 sm:mb-3">AI Recommendation</h4>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Activity className="w-5 h-5 text-purple-400" />
-                <span className="text-lg font-bold text-white capitalize">
+                <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
+                <span className="text-sm sm:text-lg font-bold text-white capitalize">
                   {aiAnalysis.recommendation.action}
                 </span>
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xs sm:text-sm text-gray-400">
                 Confidence: {aiAnalysis.confidence}%
               </div>
             </div>
-            <p className="text-sm text-gray-400 mt-2">
+            <p className="text-xs sm:text-sm text-gray-400 mt-2">
               {aiAnalysis.recommendation.reason}
             </p>
           </div>
 
           {/* Risk Assessment */}
-          <div className="bg-gray-900/50 rounded-lg p-4">
-            <h4 className="text-sm font-medium text-gray-400 mb-3">Risk Assessment</h4>
+          <div className="bg-gray-900/50 rounded-lg p-3 sm:p-4">
+            <h4 className="text-xs sm:text-sm font-medium text-gray-400 mb-2 sm:mb-3">Risk Assessment</h4>
             <div className="flex items-center gap-2 mb-2">
-              <AlertCircle className={`w-5 h-5 ${
+              <AlertCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${
                 aiAnalysis.riskLevel.level === 'low' 
                   ? 'text-green-400' 
                   : 'text-yellow-400'
               }`} />
-              <span className="text-lg font-bold text-white capitalize">
+              <span className="text-sm sm:text-lg font-bold text-white capitalize">
                 {aiAnalysis.riskLevel.level} Risk
               </span>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               {aiAnalysis.riskLevel.factors.map((factor, index) => (
                 <span 
                   key={index}
@@ -635,14 +636,16 @@ const SudoCatAnalysis: React.FC<SudoCatAnalysisProps> = ({ selectedNFT }) => {
           </div>
 
           {/* Action Buttons */}
-          <div className="grid grid-cols-2 gap-4">
-            <button className="w-full px-4 py-3 bg-purple-500 hover:bg-purple-600 rounded-lg font-medium text-white transition-colors duration-300 flex items-center justify-center gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <button className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-purple-500 hover:bg-purple-600 rounded-lg font-medium text-white transition-colors duration-300 flex items-center justify-center gap-2 text-sm sm:text-base">
               <DollarSign className="w-4 h-4" />
-              Buy Now
+              <span className="hidden xs:inline">Buy Now</span>
+              <span className="xs:hidden">Buy</span>
             </button>
-            <button className="w-full px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium text-white transition-colors duration-300 flex items-center justify-center gap-2">
+            <button className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium text-white transition-colors duration-300 flex items-center justify-center gap-2 text-sm sm:text-base">
               <Tag className="w-4 h-4" />
-              Make Offer
+              <span className="hidden xs:inline">Make Offer</span>
+              <span className="xs:hidden">Offer</span>
             </button>
           </div>
         </div>
